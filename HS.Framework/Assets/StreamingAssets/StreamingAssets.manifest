@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 328254203
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: assets/res/allinone/11.unity3d
+      Dependencies:
+        Dependency_0: assets/art/d_expertbuhochristmas.png
+    Info_1:
+      Name: assets/res/oneinone/22/gameobjec2.unity3d
+      Dependencies:
+        Dependency_0: assets/art/d_expertbuhochristmas.png
+    Info_2:
+      Name: assets/res/oneinone/22/gameobject1.unity3d
+      Dependencies:
+        Dependency_0: assets/art/d_expertbuhochristmas.png
+    Info_3:
+      Name: assets/art/d_expertbuhochristmas.png
+      Dependencies: {}
