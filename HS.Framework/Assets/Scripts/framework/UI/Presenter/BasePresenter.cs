@@ -7,6 +7,7 @@ namespace framework.UI
     { 
         private View _view = null;
         private bool _isCache = false;
+        private UIConfig _uiConfig;
         
         public View View
         {
@@ -21,6 +22,21 @@ namespace framework.UI
                 return _view;
             }
             set => _view = value;
+        }
+        
+        public UIConfig UIConfig
+        {
+            get
+            {
+                if (_uiConfig == null)
+                {
+                    GameLog.Error("_uiConfig is null");
+                    return null;
+                }
+
+                return _uiConfig;
+            }
+            set => _uiConfig = value;
         }
 
         public T GetCom<T>(string nodeName) where T : Component
@@ -82,7 +98,6 @@ namespace framework.UI
             _view.Active(false);
             InitData();
             RefreshUI();
-            UnRegister();
             Register();
             _view.Active(true);
         }

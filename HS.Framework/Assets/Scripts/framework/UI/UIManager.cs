@@ -19,9 +19,11 @@ namespace framework.UI
     
     public class UIConfig
     {
-        public ViewType ViewType = ViewType.Null;
-        public string Path = string.Empty;
+        public int uiID = 0;
+        public ViewType viewType = ViewType.Null;
+        public string path = string.Empty;
         public bool isLobby = false;
+        public bool isCache = false;
     }
     
     
@@ -32,6 +34,8 @@ namespace framework.UI
         private Dictionary<int, MainViewPresenter> _dicMainPresenters = new Dictionary<int, MainViewPresenter>();
         private Dictionary<ViewType, Transform> _dicTransforms = new Dictionary<ViewType, Transform>();
         private Transform _uiroot = null;
+        private bool _isInStackView = false; //是否处于界面栈
+        private Stack<int> _stackViewCache = new Stack<int>();
         private readonly Dictionary<ViewType, int> _dicViewToLayerOrder = new Dictionary<ViewType, int>()
         {
             [ViewType.Panel] = 1000,
@@ -68,12 +72,12 @@ namespace framework.UI
             
         }
 
-        private void ShowMain<T>(int uiid, UIConfig uiConfig) where T : MainViewPresenter
+        public void ShowMainPresenter<T>(int uiid, UIConfig uiConfig, BaseUIParam uiParam = null, bool isAsync = false) where T : MainViewPresenter, new()
         {
             if (_dicMainPresenters.TryGetValue(uiid, out var mainViewPresenter))
             {
-                //todo 判读界面栈逻辑
-                int curTopLayer = GetCurTopLayer(uiConfig.ViewType) + DELTA_LAYER;
+                CheckAndStartStackView(uiid, uiConfig);
+                int curTopLayer = GetCurTopLayer(uiConfig.viewType) + DELTA_LAYER;
                 //如果已经显示
                 if (mainViewPresenter.IsActive())
                 {
@@ -87,13 +91,208 @@ namespace framework.UI
                     _stackOperation.Push(uiid);
                     return;
                 }
-                
+                mainViewPresenter.View.SetCanvasOrder(curTopLayer);
+                mainViewPresenter.Show();
+                _stackOperation.Push(uiid);
             }
             else
             {
-                handler = new ViewLoaderHander();
-                _dicLoaderHandlers.Add(uiid, handler);
                 
+                if (_dicLoaderHandlers.TryGetValue(uiid, out var handler))
+                {
+                    //说明界面正在打开中
+                    return;
+                }
+                else
+                {
+                    CheckAndStartStackView(uiid, uiConfig);
+                    T presenter = new T();
+                    if (isAsync)
+                    {
+                        handler = ResourceManager.Instance.LoadAsync<GameObject>(uiConfig.path, delegate(Object o)
+                        {
+                            
+                            InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(o) as GameObject, uiParam);
+                        }) as ViewLoaderHander;
+                    }
+                    else
+                    {
+                        handler = ResourceManager.Instance.LoadSync<GameObject>(uiConfig.path) as ViewLoaderHander;
+                        InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(handler.gameObject), uiParam);
+                    }
+                    _dicLoaderHandlers.Add(uiid, handler);
+                    _stackOperation.Push(uiid);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 界面栈只会处理PanelPresenter(一级界面)和DialogPresenter(二级界面)
+        /// </summary>
+        /// <param name="uiid"></param>
+        /// <param name="uiConfig"></param>
+        /// <returns></returns>
+        private bool CheckAndStartStackView(int uiid, UIConfig uiConfig)
+        {
+            if (_stackOperation.Count == 0)
+            {
+                return false;
+            }
+
+            var lastUIID = _stackOperation.Peek();
+            if (_dicMainPresenters.TryGetValue(lastUIID, out var lastPresenter))
+            {
+                if (lastPresenter.UIConfig.viewType == ViewType.Dialog && uiConfig.viewType == ViewType.Panel)
+                {
+                    if (_isInStackView)
+                    {
+                        DisposeStackView();
+                    }
+
+                    _isInStackView = true;
+                    if (_stackViewCache.Count > 0)
+                    {
+                        GameLog.Error("CheckAndStartStackView error");
+                        return false;
+                    }
+                    _stackViewCache.Clear();
+                    //将当前显示的界面入栈并隐藏
+                    foreach (var presenter in _dicMainPresenters.Values)
+                    {
+                        presenter.Active(false);
+                        _stackViewCache.Push(presenter.UIConfig.uiID);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                //理论上不会走到这
+                GameLog.Error("CheckAndStartStackView error");
+                return false;
+            }
+        }
+
+        private void DisposeStackView()
+        {
+            while (_stackViewCache.Count > 0)
+            {
+                var uiid = _stackViewCache.Pop();
+                if (_dicMainPresenters.TryGetValue(uiid, out var presenter))
+                {
+                    if (presenter.IsLobby())
+                    {
+                        presenter.Active(true);
+                    }
+                    else
+                    {
+                        DisposePresenterByUIID(presenter.UIConfig);
+                    }
+                }
+                else
+                {
+                    GameLog.Error("DisposeStackView error");
+                }
+            }
+        }
+        
+        private void InitAndShowPanel(BasePresenter presenter, UIConfig uiConfig, GameObject obj, BaseUIParam uiParam = null)
+        {
+            View view = new View();
+            view.Handler = _dicLoaderHandlers[uiConfig.uiID]; //一定取得到
+            view.UIRoot = obj;
+            presenter.View = view;
+            presenter.UIConfig = uiConfig;
+            presenter.Show();
+        }
+
+        private void DisposePresenterByUIID(UIConfig uiConfig)
+        {
+            BasePresenter prensenter = GetExistPresenter(uiConfig);
+            if (prensenter == null)
+            {
+                GameLog.Error("DisposePresenterByUIID error1");
+                return;
+            }
+            prensenter.Active(false);
+            if (uiConfig.isCache)
+            {
+                return;
+            }
+            prensenter.Dispose();
+            RemoveExistPresenter(uiConfig);
+        }
+
+        private BasePresenter GetExistPresenter(UIConfig uiConfig)
+        {
+            switch (uiConfig.viewType)
+            {
+                case ViewType.Panel:
+                
+                case ViewType.Dialog:
+                {
+                    if (_dicMainPresenters.TryGetValue(uiConfig.uiID, out var presenter))
+                    {
+                        return presenter;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                case ViewType.Message:
+                {
+
+                    return null;
+                }
+                case ViewType.Guide:
+                {
+                    return null;
+                }
+                case ViewType.System:
+                {
+                    return null;
+                }
+                default:
+                {
+                    return null;
+                }
+            }
+        }
+
+        private void RemoveExistPresenter(UIConfig uiConfig)
+        {
+            switch (uiConfig.viewType)
+            {
+                case ViewType.Panel:
+                
+                case ViewType.Dialog:
+                {
+                    _dicMainPresenters.Remove(uiConfig.uiID);
+                    return;
+                }
+                case ViewType.Message:
+                {
+
+                    return;
+                }
+                case ViewType.Guide:
+                {
+                    return;
+                }
+                case ViewType.System:
+                {
+                    return;
+                }
+                default:
+                {
+                    return;
+                }
             }
         }
 

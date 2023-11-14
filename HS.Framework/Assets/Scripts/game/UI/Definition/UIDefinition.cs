@@ -15,8 +15,8 @@ namespace Game
         {
             [(int)UIID.testPanel] = new UIConfig()
             {
-                ViewType = ViewType.Panel,
-                Path = "",
+                viewType = ViewType.Panel,
+                path = "",
                 isLobby = true
             },
         };

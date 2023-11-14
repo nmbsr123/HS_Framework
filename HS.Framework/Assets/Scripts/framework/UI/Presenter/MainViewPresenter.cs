@@ -2,6 +2,11 @@
 {
     public class MainViewPresenter : BasePresenter
     {
+        public bool IsLobby()
+        {
+            return UIConfig.isLobby;
+        }
+
         public override void OnCreate()
         {
             throw new System.NotImplementedException();

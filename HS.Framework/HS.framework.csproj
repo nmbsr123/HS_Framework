@@ -43,6 +43,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\framework\Resource\Strategy\BaseLoadStrategy.cs" />
      <Compile Include="Assets\Scripts\framework\Resource\ViewLoaderHander.cs" />
+     <Compile Include="Assets\Scripts\framework\UI\BaseUIParam.cs" />
      <Compile Include="Assets\Scripts\framework\UI\Presenter\MessageViewPresenter.cs" />
      <Compile Include="Assets\Scripts\framework\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\framework\UI\View\IView.cs" />
@@ -71,7 +72,6 @@
      <Folder Include="Assets\Scripts\framework\Manager\Base" />
      <Folder Include="Assets\Scripts\framework\Utils" />
      <Folder Include="Assets\Scripts\framework\Manager" />
-     <Folder Include="Assets\Scripts\framework\UI" />
      <Folder Include="Assets\Scripts\framework\Event" />
      <Folder Include="Assets\Scripts\framework\UI\View" />
      <Folder Include="Assets\Scripts\framework\Resource\Strategy" />
