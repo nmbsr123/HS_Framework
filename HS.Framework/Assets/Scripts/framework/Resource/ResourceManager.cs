@@ -1,11 +1,17 @@
 ﻿using System;
+using UnityEngine;
 
 namespace framework.Resource
 {
-    public class ResourceManager : BaseManager
+    public class ResourceManager : Singleton<ResourceManager>, IManager 
     {
         private BaseLoadStrategy _loadStrategy = null;
-        public override void Init()
+        protected override void OnCreate()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public void Init()
         {
             if (true)
             {
@@ -23,7 +29,12 @@ namespace framework.Resource
             return _loadStrategy.LoadAync<T>(path, onComplete);
         }
 
-        public override void Dispose()
+        public T EditLoad<T>(string path) where T : UnityEngine.Object
+        {
+            return Resources.Load<T>(path);
+        }
+
+        public void Dispose()
         {
             _loadStrategy.Dispose();
         }

@@ -1,6 +1,6 @@
 ﻿namespace framework.UI
 {
-    public class SubPresenter : BasePresenter
+    public class SubviewPresenter : BasePresenter
     {
         public override void OnCreate()
         {

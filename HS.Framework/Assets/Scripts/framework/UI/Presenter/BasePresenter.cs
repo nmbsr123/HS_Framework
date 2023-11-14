@@ -33,12 +33,58 @@ namespace framework.UI
         public abstract void Register();
         public abstract void UnRegister();
         public abstract void OnDispose();
+        private object _uiParam = null;
+
+        public bool IsActive()
+        {
+            if (_view == null)
+            {
+                return false;
+            }
+
+            return _view.IsActive();
+        }
+
+        public bool IsLastSlibingIndex()
+        {
+            if (_view == null)
+            {
+                return false;
+            }
+            return _view.IsLastSlibingIndex();
+        }
+
+        public void Active(bool bActive)
+        {
+            if (_view == null)
+            {
+                return;
+            }
+            _view.Active(bActive);
+        }
+
+        public void SetParam(object param)
+        {
+            _uiParam = param;
+        }
+
+        protected T GetParam<T>() where T : class
+        {
+            return _uiParam as T;
+        }
+
         public void Show()
         {
+            if (_view == null)
+            {
+                return;
+            }
+            _view.Active(false);
             InitData();
             RefreshUI();
             UnRegister();
             Register();
+            _view.Active(true);
         }
         
         public void Dispose()

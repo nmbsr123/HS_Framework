@@ -1,6 +1,6 @@
 ﻿namespace framework.UI
 {
-    public class MainPresenter : BasePresenter
+    public class MessageViewPresenter : BasePresenter
     {
         public override void OnCreate()
         {

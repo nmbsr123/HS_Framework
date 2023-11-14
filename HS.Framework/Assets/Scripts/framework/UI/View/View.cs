@@ -7,10 +7,10 @@ namespace framework.UI
 {
     public class View : IView
     {
-        private LoaderHandler _handler = null;
+        private ViewLoaderHander _handler = null;
         private Dictionary<string, NodeBind> _dicNodeBind = new Dictionary<string, NodeBind>();
 
-        public LoaderHandler Handler
+        public ViewLoaderHander Handler
         {
             get
             {
@@ -27,16 +27,33 @@ namespace framework.UI
         
         public void InitNodeBind()
         {
-            if (_handler.asset == null)
+            if (_handler.gameObject == null)
             {
                 GameLog.Error("_handler's asset is null");
                 return;
             }
-            var coms = (_handler.asset as GameObject).GetComponentsInChildren<NodeBind>();
+            var coms = _handler.gameObject.GetComponentsInChildren<NodeBind>();
             foreach (var com in coms)
             {
                 _dicNodeBind.Add(com.name, com);
             }
+        }
+
+        public void SetCanvasOrder(int order)
+        {
+            if (_handler == null || _handler.gameObject == null)
+            {
+                return;
+            }
+
+            var canvas = _handler.gameObject.GetComponent<Canvas>();
+            if (canvas == null)
+            {
+                GameLog.Error("canvas is null");
+                return;
+            }
+
+            canvas.sortingOrder = order;
         }
 
         public T GetCom<T>(string nodeName) where T : Component
@@ -50,6 +67,44 @@ namespace framework.UI
                 GameLog.Error("node not exits : " + nodeName);
                 return null;
             }
+        }
+
+        public bool IsActive()
+        {
+            if (_handler == null)
+            {
+                return false;
+            }
+
+            if (_handler.gameObject == null)
+            {
+                return false;
+            }
+
+            return _handler.gameObject.activeSelf;
+        }
+
+        public void Active(bool bActive)
+        {
+            if (_handler == null || _handler.gameObject == null)
+            {
+                return;
+            }
+
+            if (_handler.gameObject.activeSelf == bActive)
+            {
+                return;
+            }
+            _handler.gameObject.SetActive(bActive);
+        }
+
+        public bool IsLastSlibingIndex()
+        {
+            if (_handler == null || _handler.gameObject == null)
+            {
+                return false;
+            }
+            return _handler.gameObject.transform.GetSiblingIndex() == _handler.gameObject.transform.parent.childCount - 1;
         }
     }
 }
