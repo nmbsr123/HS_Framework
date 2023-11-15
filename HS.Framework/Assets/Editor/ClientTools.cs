@@ -212,7 +212,8 @@ public class ClientTools : EditorWindow
                     path.EndsWith(".jgp") ||
                     path.EndsWith(".JGP") ||
                     path.EndsWith(".fbx") ||
-                    path.EndsWith(".FBX"))
+                    path.EndsWith(".FBX") ||
+                    path.EndsWith(".shader"))
                 {
                     if (m_dependCount.ContainsKey(path))
                     {

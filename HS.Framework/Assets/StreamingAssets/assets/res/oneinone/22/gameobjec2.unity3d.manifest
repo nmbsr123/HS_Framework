@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1288387315
+CRC: 2719528222
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4e49d319b51307f0269e0c27772382f2
+    Hash: ffde2d421e03761d0c072c7749f4bca0
   TypeTreeHash:
     serializedVersion: 2
     Hash: c28ed33fc5c4b284671c4ae4123a881b
@@ -37,4 +37,4 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/Res/OneInOne/22/GameObjec2.prefab
 Dependencies:
-- D:/UnityProject/HS.Framework/HS.Framework/Assets/StreamingAssets/assets/art/d_expertbuhochristmas.png
+- D:/HS_Framework/HS.Framework/Assets/StreamingAssets/assets/art/d_expertbuhochristmas.png

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 328254203
+CRC: 3898155402
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -15,5 +15,19 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: assets/art/d_expertbuhochristmas.png
     Info_3:
+      Name: assets/res/oneinone/ui/prefab/panel_test.unity3d
+      Dependencies:
+        Dependency_0: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+    Info_4:
+      Name: assets/res/oneinone/ui/prefab/panel_test2.unity3d
+      Dependencies:
+        Dependency_0: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+    Info_5:
       Name: assets/art/d_expertbuhochristmas.png
+      Dependencies: {}
+    Info_6:
+      Name: assets/res/allinone/textmesh pro/shaders/tmp_sdf-mobile.shader
+      Dependencies: {}
+    Info_7:
+      Name: assets/res/allinone/textmesh pro/sprites.unity3d
       Dependencies: {}

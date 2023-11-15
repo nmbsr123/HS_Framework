@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 4184471508
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 57ee87442c60b107b091ff2f9348018a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ff414f606ea1972259b080d7bcf51689
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/AllInOne/TextMesh Pro/Sprites/EmojiOne.png
+Dependencies: []

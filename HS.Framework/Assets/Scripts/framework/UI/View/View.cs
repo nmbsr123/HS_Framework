@@ -7,11 +7,11 @@ namespace framework.UI
 {
     public class View : IView
     {
-        private ViewLoaderHander _handler = null;
+        private LoaderHandler _handler = null;
         private GameObject _uiRoot = null;
         private Dictionary<string, NodeBind> _dicNodeBind = new Dictionary<string, NodeBind>();
 
-        public ViewLoaderHander Handler
+        public LoaderHandler Handler
         {
             get
             {

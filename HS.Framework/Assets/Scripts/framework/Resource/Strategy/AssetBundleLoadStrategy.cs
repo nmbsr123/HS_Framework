@@ -12,35 +12,59 @@ namespace framework.Resource
             _assetBundleMgr.InitDependConfig();
         }
 
-        public override LoaderHandler LoadSync<T>(string path)
+        public override LoaderHandler LoadPrefabSync<T>(string path)
         {
-            BundleEntity bundleEntity = _assetBundleMgr.LoadBundleEntitySync(path);
-            string assetName = string.Empty;
-            var strArray = path.Split('/');
-            assetName = strArray.Last();
+            var bundleName = ParsePath(path);
+            BundleEntity bundleEntity = _assetBundleMgr.LoadBundleEntitySync(bundleName);
+            var asset = bundleEntity.AbBundle.LoadAsset<T>(path + ".prefab");
             return new LoaderHandler()
             {
                 loadStrategy = this,
                 bundleEntity = bundleEntity,
-                asset = bundleEntity.AbBundle.LoadAsset<T>(assetName)
+                asset = asset
             };
         }
 
-        public override LoaderHandler LoadAync<T>(string path, Action<UnityEngine.Object> onComplete)
+        public override LoaderHandler LoadPrefabAync<T>(string path, Action<UnityEngine.Object> onComplete)
         {
+            var bundleName = ParsePath(path);
             LoaderHandler loaderHandler = new LoaderHandler();
             loaderHandler.loadStrategy = this;
-            string assetName = string.Empty;
-            var strArray = path.Split('/');
-            assetName = strArray.Last();
-            _assetBundleMgr.LoadBundleEntityAsync(path, entity =>
+            _assetBundleMgr.LoadBundleEntityAsync(bundleName, entity =>
             {
                 loaderHandler.bundleEntity = entity;
-                loaderHandler.asset = entity.AbBundle.LoadAsset<T>(assetName);
+                loaderHandler.asset = entity.AbBundle.LoadAsset<T>(path + ".prefab");
             });
             return loaderHandler;
         }
 
+        /// <summary>
+        /// 根据path解析，返回bundleName
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string ParsePath(string path)
+        {
+            path = path.ToLower();
+            int targetIndex = 0;
+            for (int i = path.Length - 1; i >= 0; i--)
+            {
+                if (path[i] == '/')
+                {
+                    targetIndex = i;
+                    break;
+                }
+            }
+            if (path.Contains("allinone"))
+            {
+                return path.Substring(0, targetIndex) + ".unity3d";
+            }
+            else
+            {
+                return path + ".unity3d";
+            }
+        }
+        
         public override void Unload(string bundleName)
         {
             _assetBundleMgr.Unload(bundleName);

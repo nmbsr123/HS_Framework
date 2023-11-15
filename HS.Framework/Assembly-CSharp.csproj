@@ -41,15 +41,71 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Folder Include="Assets" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMPro.cginc" />
+     <Folder Include="Assets\StreamingAssets\assets\res\oneinone" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <Folder Include="Assets\StreamingAssets\assets\res\oneinone\22" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Sprites" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Resources\Sprite Assets" />
+     <Folder Include="Assets\Res\OneInOne" />
+     <None Include="Assets\StreamingAssets\assets\res\allinone\textmesh pro\shaders\tmp_sdf-mobile.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <Folder Include="Assets\StreamingAssets\assets" />
+     <Folder Include="Assets\StreamingAssets" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Resources\Fonts &amp; Materials" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <Folder Include="Assets\Res" />
+     <Folder Include="Assets\Res\OneInOne\UI\Prefab" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Resources" />
+     <Folder Include="Assets\Resources" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\StreamingAssets\assets\res\allinone" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro" />
+     <Folder Include="Assets\Art" />
+     <Folder Include="Assets\StreamingAssets\assets\res" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <Folder Include="Assets\StreamingAssets\assets\res\oneinone\ui\prefab" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Shaders" />
+     <Folder Include="Assets\StreamingAssets\assets\res\allinone\textmesh pro" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Resources\Style Sheets" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Fonts" />
+     <Folder Include="Assets\Res\OneInOne\UI" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <Folder Include="Assets\Res\AllInOne\11" />
      <None Include="Assets\StreamingAssets\FileList.txt" />
+     <Folder Include="Assets\StreamingAssets\assets\art" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <Folder Include="Assets\StreamingAssets\assets\res\oneinone\ui" />
+     <Folder Include="Assets\StreamingAssets\assets\res\allinone\textmesh pro\shaders" />
+     <Folder Include="Assets\Scripts" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <Folder Include="Assets\Scenes" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\新建文本文档.txt" />
+     <Folder Include="Assets\Res\AllInOne\TextMesh Pro\Documentation" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <Folder Include="Assets\Res\AllInOne" />
+     <Folder Include="Assets\Res\OneInOne\22" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Sprites\EmojiOne.json" />
+     <None Include="Assets\Res\AllInOne\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <Reference Include="UnityEngine">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.6f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.CoreModule">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.6f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
-     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.6f1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
+     <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

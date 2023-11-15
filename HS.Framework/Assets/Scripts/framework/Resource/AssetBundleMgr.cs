@@ -30,7 +30,7 @@ namespace framework.Resource
         public void InitDependConfig()
         {
             mDicDependConfig.Clear();
-            AssetBundle ab = AssetBundle.LoadFromFile(GetPath("StandaloneWindows"));
+            AssetBundle ab = AssetBundle.LoadFromFile( $"{Application.streamingAssetsPath}/StreamingAssets");
             AssetBundleManifest mainfest = ab.LoadAsset("AssetBundleManifest") as AssetBundleManifest;
             foreach(string assetName in mainfest.GetAllAssetBundles())
             {
@@ -46,7 +46,7 @@ namespace framework.Resource
 
         private string GetPath(string bundleName)
         {
-            return $"{Application.streamingAssetsPath}/StandaloneWindows/{bundleName}";
+            return $"{Application.streamingAssetsPath}/{bundleName}";
         }
 
         public void Dispose()

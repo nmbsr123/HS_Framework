@@ -42,9 +42,6 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\framework\Resource\Strategy\BaseLoadStrategy.cs" />
-     <Compile Include="Assets\Scripts\framework\Resource\ViewLoaderHander.cs" />
-     <Compile Include="Assets\Scripts\framework\UI\BaseUIParam.cs" />
-     <Compile Include="Assets\Scripts\framework\UI\Presenter\MessageViewPresenter.cs" />
      <Compile Include="Assets\Scripts\framework\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\framework\UI\View\IView.cs" />
      <Compile Include="Assets\Scripts\framework\Event\EventSender.cs" />
@@ -65,6 +62,9 @@
      <Compile Include="Assets\Scripts\framework\UI\View\View.cs" />
      <Compile Include="Assets\Scripts\framework\Log\GameLog.cs" />
      <Compile Include="Assets\Scripts\framework\Resource\BundleEntity.cs" />
+     <Compile Include="Assets\Scripts\framework\UI\Presenter\MessageViewPresenter.cs" />
+     <Compile Include="Assets\Scripts\framework\UI\BaseUIParam.cs" />
+     <Compile Include="Assets\Scripts\framework\Resource\ViewLoaderHander.cs" />
      <Folder Include="Assets\Scripts\framework" />
      <Folder Include="Assets\Scripts\framework\Log" />
      <Folder Include="Assets\Scripts\framework\Singleton" />
@@ -72,9 +72,12 @@
      <Folder Include="Assets\Scripts\framework\Manager\Base" />
      <Folder Include="Assets\Scripts\framework\Utils" />
      <Folder Include="Assets\Scripts\framework\Manager" />
+     <Folder Include="Assets\Scripts\framework\UI" />
+     <Folder Include="Assets\Scripts\framework\Resource" />
      <Folder Include="Assets\Scripts\framework\Event" />
      <Folder Include="Assets\Scripts\framework\UI\View" />
      <Folder Include="Assets\Scripts\framework\Resource\Strategy" />
+     <Folder Include="Assets\Scripts\framework\UI\Presenter" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

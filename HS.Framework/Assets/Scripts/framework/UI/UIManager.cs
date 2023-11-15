@@ -30,7 +30,7 @@ namespace framework.UI
     public class UIManager : Singleton<UIManager>, IManager 
     {
         private Stack<int> _stackOperation = new Stack<int>();
-        private Dictionary<int, ViewLoaderHander> _dicLoaderHandlers = new Dictionary<int, ViewLoaderHander>();
+        private Dictionary<int, LoaderHandler> _dicLoaderHandlers = new Dictionary<int, LoaderHandler>();
         private Dictionary<int, MainViewPresenter> _dicMainPresenters = new Dictionary<int, MainViewPresenter>();
         private Dictionary<ViewType, Transform> _dicTransforms = new Dictionary<ViewType, Transform>();
         private Transform _uiroot = null;
@@ -49,16 +49,13 @@ namespace framework.UI
 
         private const string _uiRootPath = "UIRoot";
         
-        protected override void OnCreate()
-        {
-        }
-        
         public void Init()
         {
             if (_uiroot == null)
             {
                 _uiroot = ResourceManager.Instance.EditLoad<GameObject>(_uiRootPath).transform;
-                GameObject.DontDestroyOnLoad(_uiroot);
+                _uiroot = GameObject.Instantiate(_uiroot);
+                _uiroot.position = Vector3.zero;
                 _dicTransforms.Add(ViewType.Panel, _uiroot.Find("Canvas/PanelView"));
                 _dicTransforms.Add(ViewType.Dialog, _uiroot.Find("Canvas/DialogView"));
                 _dicTransforms.Add(ViewType.Message, _uiroot.Find("Canvas/MessageView"));
@@ -109,18 +106,19 @@ namespace framework.UI
                     T presenter = new T();
                     if (isAsync)
                     {
-                        handler = ResourceManager.Instance.LoadAsync<GameObject>(uiConfig.path, delegate(Object o)
+                        handler = ResourceManager.Instance.LoadPrefabAsync<GameObject>(uiConfig.path, delegate(Object o)
                         {
                             
                             InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(o) as GameObject, uiParam);
-                        }) as ViewLoaderHander;
+                        });
+                        _dicLoaderHandlers.Add(uiid, handler);
                     }
                     else
                     {
-                        handler = ResourceManager.Instance.LoadSync<GameObject>(uiConfig.path) as ViewLoaderHander;
-                        InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(handler.gameObject), uiParam);
+                        handler = ResourceManager.Instance.LoadPrefabSync<GameObject>(uiConfig.path);
+                        _dicLoaderHandlers.Add(uiid, handler);
+                        InitAndShowPanel(presenter, uiConfig, GameObject.Instantiate(handler.asset as GameObject), uiParam);
                     }
-                    _dicLoaderHandlers.Add(uiid, handler);
                     _stackOperation.Push(uiid);
                 }
             }
@@ -203,6 +201,12 @@ namespace framework.UI
         
         private void InitAndShowPanel(BasePresenter presenter, UIConfig uiConfig, GameObject obj, BaseUIParam uiParam = null)
         {
+            obj.transform.SetParent(_dicTransforms[uiConfig.viewType]);
+            var rect = obj.transform.GetComponent<RectTransform>();
+            rect.anchoredPosition = Vector2.zero;
+            rect.sizeDelta = Vector2.zero;
+            rect.localPosition = Vector3.zero;
+            rect.localScale = Vector3.one;
             View view = new View();
             view.Handler = _dicLoaderHandlers[uiConfig.uiID]; //一定取得到
             view.UIRoot = obj;

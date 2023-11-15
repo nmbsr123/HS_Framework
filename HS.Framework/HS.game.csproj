@@ -41,13 +41,17 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\game\UI\Definition\UIDefinition.cs" />
      <Compile Include="Assets\Scripts\game\Config\GameUIConfig.cs" />
      <Compile Include="Assets\Scripts\game\GameEntry.cs" />
      <Compile Include="Assets\Scripts\game\HS.cs" />
-     <Compile Include="Assets\Scripts\game\UI\Definition\UIDefinition.cs" />
+     <Compile Include="Assets\Scripts\game\UI\Presenter\Panel_Test1Presenter.cs" />
      <Folder Include="Assets\Scripts\game\UI" />
      <None Include="Assets\Scripts\game\HS.game.asmdef" />
      <Folder Include="Assets\Scripts\game\UI\Definition" />
+     <Folder Include="Assets\Scripts\game\Config" />
+     <Folder Include="Assets\Scripts\game" />
+     <Folder Include="Assets\Scripts\game\UI\Presenter" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.27f1c2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
