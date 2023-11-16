@@ -5,17 +5,17 @@ namespace framework.Resource
 {
     public class AssetBundleLoadStrategy : BaseLoadStrategy
     {
-        private AssetBundleMgr _assetBundleMgr = null;
+        private AssetBundleManager mAssetBundleManager => AssetBundleManager.Instance;
         public AssetBundleLoadStrategy()
         {
-            _assetBundleMgr = new AssetBundleMgr();
-            _assetBundleMgr.InitDependConfig();
+            AssetBundleManager.CreateInstance();
+            mAssetBundleManager.Init();
         }
 
         public override LoaderHandler LoadPrefabSync<T>(string path)
         {
             var bundleName = ParsePath(path);
-            BundleEntity bundleEntity = _assetBundleMgr.LoadBundleEntitySync(bundleName);
+            BundleEntity bundleEntity = mAssetBundleManager.LoadBundleEntitySync(bundleName);
             var asset = bundleEntity.AbBundle.LoadAsset<T>(path + ".prefab");
             return new LoaderHandler()
             {
@@ -30,10 +30,11 @@ namespace framework.Resource
             var bundleName = ParsePath(path);
             LoaderHandler loaderHandler = new LoaderHandler();
             loaderHandler.loadStrategy = this;
-            _assetBundleMgr.LoadBundleEntityAsync(bundleName, entity =>
+            mAssetBundleManager.LoadBundleEntityAsync(bundleName, entity =>
             {
                 loaderHandler.bundleEntity = entity;
                 loaderHandler.asset = entity.AbBundle.LoadAsset<T>(path + ".prefab");
+                onComplete?.Invoke(loaderHandler.asset);
             });
             return loaderHandler;
         }
@@ -67,12 +68,12 @@ namespace framework.Resource
         
         public override void Unload(string bundleName)
         {
-            _assetBundleMgr.Unload(bundleName);
+            mAssetBundleManager.Unload(bundleName);
         }
 
         public override void Dispose()
         {
-            _assetBundleMgr.Dispose();
+            mAssetBundleManager.Dispose();
         }
     }
 }

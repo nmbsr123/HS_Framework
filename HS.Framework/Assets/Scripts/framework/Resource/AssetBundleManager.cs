@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using game;
 using UnityEngine;
 
 namespace framework.Resource
 {
-    public class AssetBundleMgr
+    public class AssetBundleManager : Singleton<AssetBundleManager>, IGameUpdate
     {
         //加载完成的资源
         private Dictionary<string, BundleEntity> mDicLoadedBundleEntities = new Dictionary<string, BundleEntity>();
@@ -26,8 +27,14 @@ namespace framework.Resource
         private const int mDestroyIntervalTime = 5; //每隔几秒进行销毁
 
         private float mDestroyTime = 0f;
+        
+        public void Init()
+        {
+            InitDependConfig();
+        }
+        
         //初始化依赖项，参考其他博客，这一步大同小异
-        public void InitDependConfig()
+        private void InitDependConfig()
         {
             mDicDependConfig.Clear();
             AssetBundle ab = AssetBundle.LoadFromFile( $"{Application.streamingAssetsPath}/StreamingAssets");
@@ -218,9 +225,9 @@ namespace framework.Resource
             {
                 //创建一个新的
                 bundleEntity = new BundleEntity(bundleName, pathArray);
+                bundleEntity.SetAssetBundle(AssetBundle.LoadFromFile(GetPath(bundleName)));
             }
             bundleEntity.AddRefCount();
-            bundleEntity.SetAssetBundle(AssetBundle.LoadFromFile(GetPath(bundleName)));
             mDicLoadedBundleEntities.Add(bundleName, bundleEntity);
             return bundleEntity;
         }
@@ -277,8 +284,9 @@ namespace framework.Resource
             {
                 bHasDep = false;
             }
-            bundleEntity = new BundleEntity(bundleName, pathArray);
+            bundleEntity = new BundleEntity(bundleName, pathArray, true);
             bundleEntity.AddRefCount();
+            bundleEntity.AddLoadCallback(callback);
             if (bHasDep) 
             {
                 //如果有依赖项，那么自身加入待加载队列
@@ -345,7 +353,7 @@ namespace framework.Resource
             }
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             mCacheRemoveList.Clear();
             foreach (var keyVal in mDicLoadingBundleEntities)
@@ -359,7 +367,7 @@ namespace framework.Resource
                         var bundle = mDicAsyncBundleCreateRequests[keyVal.Key].assetBundle;
                         keyVal.Value.SetAssetBundle(bundle);
                         //通知依赖此bundle的父bundle
-                        EventUtil.SendMessage(EventType.OnBundleLoaded, bundle);
+                        EventUtil.SendMessage(EventType.OnBundleLoaded,  keyVal.Value);
                         keyVal.Value.DoCallback();
                     }
                 }

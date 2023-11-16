@@ -20,18 +20,22 @@ namespace framework.Resource
         public string BundleName => _bundleName; //资产名字
         public int RefCount => mRefCount; //引用计数
         public AssetBundle AbBundle => mAbBundle;
-        public BundleEntity(string assetName, string[] dependArray)
+        public BundleEntity(string assetName, string[] dependArray, bool isAsync = false)
         {
             _bundleName = assetName;
             mDependArray = dependArray;
-            EventUtil.AddListener(EventType.OnBundleLoaded, OnBundleLoaded);
+            if (isAsync)
+            {
+                EventUtil.AddListener(EventType.OnBundleLoaded, OnBundleLoaded);
+            }
         }
 
         private void OnBundleLoaded(object bundleEntity)
         {
             for (int i = 0; i < mDependArray.Length; i++)
             {
-                if ((bundleEntity as BundleEntity)._bundleName == mDependArray[i]) //如果自己的依赖项完成加载
+                var entity = bundleEntity as BundleEntity;
+                if (entity._bundleName == mDependArray[i]) //如果自己的依赖项完成加载
                 {
                     mDependCompletedCount++;
                 }
@@ -101,7 +105,7 @@ namespace framework.Resource
             }
             foreach (var callback in mLoadedCallbackList)
             {
-                callback(this);
+                callback?.Invoke(this);
             }
             mLoadedCallbackList.Clear();
         }
