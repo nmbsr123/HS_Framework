@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using framework.Config;
 using UnityEngine;
 
 namespace framework.Resource
@@ -26,11 +27,11 @@ namespace framework.Resource
             mDependArray = dependArray;
             if (isAsync)
             {
-                EventUtil.AddListener(EventType.OnBundleLoaded, OnBundleLoaded);
+                HS_Framework.Event.AddEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
             }
         }
 
-        private void OnBundleLoaded(object bundleEntity)
+        private void OnBundleLoaded(BundleEntity bundleEntity)
         {
             for (int i = 0; i < mDependArray.Length; i++)
             {
@@ -43,7 +44,7 @@ namespace framework.Resource
 
             if (mDependCompletedCount == mDependArray.Length)
             {
-                EventUtil.RemoveListener(EventType.OnBundleLoaded, OnBundleLoaded);
+                HS_Framework.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
             }
         }
 
@@ -68,7 +69,7 @@ namespace framework.Resource
             {
                 mAbBundle.Unload(true);
             }
-            EventUtil.RemoveListener(EventType.OnBundleLoaded, OnBundleLoaded);
+            HS_Framework.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
         }
         
         public void ForthDispose()
@@ -79,7 +80,7 @@ namespace framework.Resource
             }
 
             mRefCount = 0;
-            EventUtil.RemoveListener(EventType.OnBundleLoaded, OnBundleLoaded);
+            HS_Framework.Event.RemoveEvent<BundleEntity>((int)HS_Framework_EventType.OnBundleLoaded, OnBundleLoaded);
         }
 
         public void SetAssetBundle(AssetBundle assetBundle)

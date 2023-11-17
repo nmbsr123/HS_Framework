@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using framework.Config;
 using game;
 using UnityEngine;
 
@@ -188,7 +189,7 @@ namespace framework.Resource
                     RecursionAddRef(bundleName);
                     bundleEntity.SetAssetBundle(request.assetBundle);
                     //通知依赖此bundle的父bundle
-                    EventUtil.SendMessage(EventType.OnBundleLoaded, bundleEntity);
+                    HS_Framework.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
                     mDicLoadedBundleEntities.Add(bundleName, bundleEntity);
                     return bundleEntity;
                 }
@@ -219,7 +220,7 @@ namespace framework.Resource
                 //Update里不会用到这个异步转同步的request所以加入默认值占位子
                 mDicAsyncBundleCreateRequests.Add(bundleName, default);
                 bundleEntity.SetAssetBundle(AssetBundle.LoadFromFile(GetPath(bundleName)));
-                EventUtil.SendMessage(EventType.OnBundleLoaded, bundleEntity);
+                HS_Framework.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  bundleEntity);
             }
             else
             {
@@ -367,7 +368,7 @@ namespace framework.Resource
                         var bundle = mDicAsyncBundleCreateRequests[keyVal.Key].assetBundle;
                         keyVal.Value.SetAssetBundle(bundle);
                         //通知依赖此bundle的父bundle
-                        EventUtil.SendMessage(EventType.OnBundleLoaded,  keyVal.Value);
+                        HS_Framework.Event.TriggerEvent((int)HS_Framework_EventType.OnBundleLoaded,  keyVal.Value);
                         keyVal.Value.DoCallback();
                     }
                 }

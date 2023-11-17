@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using framework;
 using framework.Resource;
 using framework.UI;
 using game.Config;

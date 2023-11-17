@@ -44,7 +44,6 @@
      <Compile Include="Assets\Scripts\framework\Resource\Strategy\BaseLoadStrategy.cs" />
      <Compile Include="Assets\Scripts\framework\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\framework\UI\View\IView.cs" />
-     <Compile Include="Assets\Scripts\framework\Event\EventSender.cs" />
      <Compile Include="Assets\Scripts\framework\UI\BaseUIParam.cs" />
      <Compile Include="Assets\Scripts\framework\Utils\Md5Tool.cs" />
      <Compile Include="Assets\Scripts\framework\UI\Presenter\BasePresenter.cs" />
@@ -57,15 +56,16 @@
      <Compile Include="Assets\Scripts\framework\UI\Presenter\MainViewPresenter.cs" />
      <Compile Include="Assets\Scripts\framework\UI\Presenter\SubviewPresenter.cs" />
      <Compile Include="Assets\Scripts\framework\UI\Presenter\PanelViewPresenter.cs" />
-     <Compile Include="Assets\Scripts\framework\Resource\ViewLoaderHander.cs" />
      <Compile Include="Assets\Scripts\framework\UI\Presenter\DialogViewPresenter.cs" />
-     <Compile Include="Assets\Scripts\framework\Event\EventUtil.cs" />
      <Compile Include="Assets\Scripts\framework\UI\View\NodeBind.cs" />
      <Compile Include="Assets\Scripts\framework\Resource\ResourceManager.cs" />
      <Compile Include="Assets\Scripts\framework\UI\View\View.cs" />
      <Compile Include="Assets\Scripts\framework\Log\GameLog.cs" />
      <Compile Include="Assets\Scripts\framework\Resource\BundleEntity.cs" />
      <Compile Include="Assets\Scripts\framework\Main\IGameBehaviour.cs" />
+     <Compile Include="Assets\Scripts\framework\Event\EventDispatch.cs" />
+     <Compile Include="Assets\Scripts\framework\HS_Framework.cs" />
+     <Compile Include="Assets\Scripts\framework\Config\HS_Framework_EventType.cs" />
      <Folder Include="Assets\Scripts\framework" />
      <Folder Include="Assets\Scripts\framework\Log" />
      <Folder Include="Assets\Scripts\framework\Singleton" />
@@ -74,6 +74,7 @@
      <Folder Include="Assets\Scripts\framework\Manager\Base" />
      <Folder Include="Assets\Scripts\framework\Utils" />
      <Folder Include="Assets\Scripts\framework\Manager" />
+     <Folder Include="Assets\Scripts\framework\Config" />
      <Folder Include="Assets\Scripts\framework\UI" />
      <Folder Include="Assets\Scripts\framework\Resource" />
      <Folder Include="Assets\Scripts\framework\Event" />
